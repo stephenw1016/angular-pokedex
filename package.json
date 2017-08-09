@@ -1,0 +1,23 @@
+{
+  "name": "angular-pokedex",
+  "version": "1.0.0",
+  "description": "yayya pokemonz",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephenw1016/angular-pokedex.git"
+  },
+  "keywords": [
+    "pokemon",
+    "rii'"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephenw1016/angular-pokedex/issues"
+  },
+  "homepage": "https://github.com/stephenw1016/angular-pokedex#readme"
+}
