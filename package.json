@@ -19,5 +19,19 @@
   "bugs": {
     "url": "https://github.com/stephenw1016/angular-pokedex/issues"
   },
-  "homepage": "https://github.com/stephenw1016/angular-pokedex#readme"
+  "homepage": "https://github.com/stephenw1016/angular-pokedex#readme",
+  "devDependencies": {
+    "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "@angular/animations": "^4.3.3",
+    "@angular/common": "^4.3.3",
+    "@angular/compiler": "^4.3.3",
+    "@angular/forms": "^4.3.3",
+    "@angular/http": "^4.3.3",
+    "@angular/platform-browser": "^4.3.3",
+    "@angular/platform-browser-dynamic": "^4.3.3",
+    "@angular/router": "^4.3.3",
+    "@angular/tsc-wrapped": "^4.3.3"
+  }
 }
