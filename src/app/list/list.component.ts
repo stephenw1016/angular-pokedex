@@ -8,11 +8,13 @@ import PokemonService from '../pokemon/pokemon.service';
 
 export default class ListComponent {
 	public pokeList : any[];
+	public title : string;
 
 	constructor(
 		private pokemonService : PokemonService
 	) {
 		console.log(this.pokemonService);
+		this.title = 'Static Html';
 		this.pokemonService.getPokemon().subscribe(data => {
 			console.log(data);
 		}, err => {

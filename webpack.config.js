@@ -10,24 +10,28 @@ module.exports = {
     extensions: ['.ts', '.js']
   },
   module: {
-   rules: [
-     {
-       test: /\.ts$/,
-       loaders: [
-         {
-           loader: 'awesome-typescript-loader',
-           options: { configFileName: 'tsconfig.json' }
-         } ,
-         'angular-router-loader',
-         'angular2-template-loader'
-       ]
-     },
-     {
-       test: /\.html$/,
-       loader: 'html-loader'
-     }
-   ]
- },
+    rules: [
+      {
+        test: /\.ts$/,
+        loaders: [
+          {
+            loader: 'awesome-typescript-loader',
+            options: { configFileName: 'tsconfig.json' }
+          } ,
+          'angular-router-loader',
+          'angular2-template-loader'
+        ]
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
+      },
+      {
+        test: /\.css$/,
+        loader: ['to-string-loader', 'css-loader']
+      }
+    ]
+  },
   output: {
     path: __dirname + "/dist",
     publicPath: "http://localhost:8090/",

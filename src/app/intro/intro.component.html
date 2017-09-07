@@ -1,0 +1,19 @@
+<div class="background" [ngStyle]="{ 'background-image': 'url(' + backgroundImg + ')'}">
+
+	<div class="container" [ngClass]="{ 'zoom': zoomInPokedex }">
+		<div class="bubble" [ngClass]="{ 'hide': clickedPokedex }">
+			Click to begin.
+		</div>
+		<div class="pokedex" [ngClass]="{ 'opening': clickedPokedex }">
+			<div class="cover top" [ngClass]="{ 'turn': clickedPokedex }" (click)="clickPokedex()">
+				<div class="face front"><img [src]="rightPokedexFrontImg" /></div>
+				<div class="face back"><img [src]="rightPokedexImg" /></div>
+			</div>
+			<div class="cover bottom">
+				<div class="face front"><img [src]="leftPokedexImg" /></div>
+				<div class="face back"></div>
+			</div>
+		</div>
+	</div>
+
+</div>
