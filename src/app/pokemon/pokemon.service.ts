@@ -10,7 +10,7 @@ export default class PokemonService {
     return this.http.get(`http://pokeapi.co/api/v2/pokemon/${id}`)
       .map(res => {
         return res.json().results.map((item: any) => {
-  				let ids = item.url.match(/http:\/\/pokeapi\.co\/api\/v2\/pokemon\/(\d+)\//);
+  				let ids = item.url.match(/.*\/(\d+)\//);
   				item.id = ids[1];
   				return item;
   			});
