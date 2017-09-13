@@ -1,4 +1,5 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -25,6 +26,14 @@ module.exports = {
      {
        test: /\.html$/,
        loader: 'html-loader'
+     },
+     {
+       test: /\.css$/,
+       loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?sourceMap' })
+     },
+     {
+       test: /\.css$/,
+       loader: 'raw-loader'
      }
    ]
  },
