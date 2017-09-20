@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 export default class PokemonService {
   constructor(private http:Http){}
 
-  getPokemon(id = '') {
-    return this.http.get(`http://pokeapi.co/api/v2/pokemon/${id}`)
+  getPokemonList() {
+    return this.http.get(`http://pokeapi.co/api/v2/pokemon`)
       .map(res => {
         return res.json().results.map((item: any) => {
   				let ids = item.url.match(/.*\/(\d+)\//);
@@ -16,4 +16,9 @@ export default class PokemonService {
   			});
       });
   }
+
+    getPokemon(id : number) {
+        return this.http.get(`http://pokeapi.co/api/v2/pokemon/${id}`)
+            .map(res => res.json());
+    }
 }
