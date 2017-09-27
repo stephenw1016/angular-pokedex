@@ -10,8 +10,6 @@ import PokemonModule from "./pokemon/pokemon.module";
 
 import AppComponent from './app.component';
 
-import '../global.css';
-
 
 @NgModule({
   imports: [

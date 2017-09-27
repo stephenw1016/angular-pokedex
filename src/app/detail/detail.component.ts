@@ -7,7 +7,8 @@ import PokemonService from "../pokemon/pokemon.service";
 
 @Component({
   selector: 'poke-detail',
-  templateUrl: './detail.component.html'
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.scss']
 })
 export default class DetailComponent implements OnInit, OnDestroy {
 

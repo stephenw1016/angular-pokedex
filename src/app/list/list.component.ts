@@ -6,7 +6,7 @@ import PokemonService from '../pokemon/pokemon.service';
 @Component({
   selector: 'poke-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.scss']
 })
 export default class ListComponent implements OnInit, OnDestroy {
 

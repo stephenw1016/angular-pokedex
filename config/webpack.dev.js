@@ -8,7 +8,7 @@ var devConfig = {
 
   module: {
     rules: [
-      // {
+      {
       //   test: /\.ts$/,
       //   loaders: [
       //     {
@@ -23,13 +23,13 @@ var devConfig = {
       //   ]
       // }
       // {
-      //   test: /\.scss$/,
-      //   exclude: /node_modules/,
-      //   loaders: [
-      //     { loader: 'raw-loader' },
-      //     { loader: 'sass-loader' }
-      //   ]
-      // }
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        loaders: [
+          { loader: 'raw-loader' },
+          { loader: 'sass-loader' }
+        ]
+      }
     ]
   },
 
