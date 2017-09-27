@@ -6,9 +6,11 @@ import ListModule from './list/list.module';
 import DetailModule from "./detail/detail.module";
 import PokemonModule from "./pokemon/pokemon.module";
 import AppComponent from './app.component';
+import AppRoutingModule from './app.routing';
+import '../global.css';
 
 @NgModule({
-  imports: [ BrowserModule, CommonModule, HttpModule, ListModule, DetailModule, PokemonModule ],
+  imports: [ BrowserModule, CommonModule, HttpModule, ListModule, DetailModule, PokemonModule, AppRoutingModule ],
   declarations: [ AppComponent ],
   bootstrap: [ AppComponent ]
 })

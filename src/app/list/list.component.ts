@@ -5,12 +5,7 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
 	selector: 'poke-list',
 	templateUrl: './list.component.html',
-	styles: [`
-		ul { list-style: none; margin:0; padding:0; }
-		li { margin:10 0; }
-		img { max-width:100px; clear: both }
-	`]
-	// styleUrls: ['./list.component.css']
+	styleUrls: ['./list.component.css']
 })
 
 export default class ListComponent implements OnInit, OnDestroy {

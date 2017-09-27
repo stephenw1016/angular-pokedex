@@ -1,7 +1,6 @@
 <ul>
-	<li *ngFor="let poke of pokeList" routerLink="{{poke.url}}">
+	<li *ngFor="let poke of pokeList" [routerLink]="poke.url">
 		<img [src]="poke.pic"/>
 		{{ poke.name }}
 	</li>
 </ul>
-<router-outlet></router-outlet>

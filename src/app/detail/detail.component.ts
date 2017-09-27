@@ -4,7 +4,6 @@ import PokemonService from "../pokemon/pokemon.service";
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
-    styles : [``],
     templateUrl : './detail.component.html',
     selector : 'poke-detail'
 })
