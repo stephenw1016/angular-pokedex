@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'poke-app',
   templateUrl: 'app.component.html'
 })
 export default class AppComponent {
-  title: string;
+
+  public title: string;
+
   constructor() {
     this.title = 'Static html';
   }

@@ -1,6 +1,6 @@
 <div>
     <div *ngIf="pokemon">
-        <h3>{{pokemon.name}}</h3>
-        <span>{{pokemon.id}}</span>
+        <span [innerHtml]="pokemon.id"></span>
+        <h3 [innerHtml]="pokemon.name"></h3>
     </div>
 </div>

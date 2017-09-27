@@ -1,36 +1,30 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+
 import PokemonService from '../pokemon/pokemon.service';
-import {Subscription} from "rxjs/Subscription";
 
 @Component({
-	selector: 'poke-list',
-	templateUrl: './list.component.html',
-	styleUrls: ['./list.component.css']
+  selector: 'poke-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
 })
-
 export default class ListComponent implements OnInit, OnDestroy {
-	public pokeList : any[];
-	private pokeSubscription : Subscription;
 
-	constructor(
-		private pokemonService : PokemonService
-	) {}
+  public pokeList: any[];
+  private pokeSubscription: Subscription;
 
-	ngOnInit() {
-		console.log(this.pokemonService);
-		this.pokeSubscription = this.pokemonService.getPokemonList().subscribe((data:any) => {
-			console.log(data);
-			this.pokeList = data.map((item: any) => {
-				item.pic = `http://res.cloudinary.com/dwnebujkh/image/upload/v1473910425/pokemon/${item.id}.png`;
-				item.url = `pokemon/details/${item.id}`;
-				return item;
-			})
-		}, (err:any) => {
-			console.error(err);
-		});
-	}
+  constructor(private pokemonService: PokemonService) {}
 
-	ngOnDestroy() {
-		this.pokeSubscription.unsubscribe();
-	}
+  ngOnInit() {
+    this.pokeSubscription = this.pokemonService.getPokemonList().subscribe((data: any) => {
+      this.pokeList = data.map((item: any) => {
+         item.pic = `http://res.cloudinary.com/dwnebujkh/image/upload/v1473910425/pokemon/${item.id}.png`;
+         return item;
+      })
+    }, (err: any) => console.error(err));
+  }
+
+  ngOnDestroy() {
+    this.pokeSubscription.unsubscribe();
+  }
 }

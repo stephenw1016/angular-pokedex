@@ -1,13 +1,18 @@
-import {NgModule} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
 import DetailComponent from './detail.component';
-import {CommonModule} from '@angular/common';
+
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [DetailComponent],
-    exports: [DetailComponent]
+  imports: [
+    CommonModule
+  ],
+  declarations: [
+    DetailComponent
+  ],
+  exports: [
+    DetailComponent
+  ]
 })
-
-export default class DetailModule {
-
-}
+export default class DetailModule {}

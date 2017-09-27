@@ -1,6 +1,6 @@
 <ul>
-	<li *ngFor="let poke of pokeList" [routerLink]="poke.url">
-		<img [src]="poke.pic"/>
-		{{ poke.name }}
+	<li *ngFor="let pokemon of pokeList" [routerLink]="['details/' + pokemon.id]">
+		<img [src]="pokemon.pic" />
+		<span [innerHtml]="pokemon.name"></span>
 	</li>
 </ul>
