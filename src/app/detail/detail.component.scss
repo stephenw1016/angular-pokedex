@@ -1,0 +1,40 @@
+h3 {
+  text-transform: capitalize;
+}
+
+.initial-image {
+  display: flex;
+  margin: 15px 0;
+}
+
+.post-initial-image {
+  padding: 15px 30px;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-color: silver;
+  display: inline-block;
+  align-content: left;
+}
+
+label {
+  &::after {
+    content: ':';
+  }
+
+  color: silver;
+  text-transform: capitalize;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+.pokemon-details {
+  font-family: "Helvetica";
+}
