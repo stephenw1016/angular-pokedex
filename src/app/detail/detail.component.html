@@ -1,13 +1,12 @@
-<div *ngIf="pokemon" class="pokemon-details">
-  <div class="initial-image">
+<div *ngIf="pokemon">
+  <div class="header">
+    <div id="pic-background"></div>
     <img [src]="pokemon.pic" />
-    <div class="post-initial-image">
-      <label>Id</label>
-      <span [innerHtml]="pokemon.id"></span>
-      <h3 [innerHtml]="pokemon.name"></h3>
-    </div>
+    <a class="back" [routerLink]="['/pokemon']"><span> Back to List</span></a>
+    <div class="number"><span [innerHtml]="pokemon.id"></span></div>
+    <h3 [innerHtml]="pokemon.name"></h3>
   </div>
-  <ul>
+  <ul class="content">
     <li><label>height</label> <span [innerHtml]="pokemon.height"></span></li>
     <li><label>weight</label> <span [innerHtml]="pokemon.weight"></span></li>
     <li *ngFor="let stat of pokemon.stats">

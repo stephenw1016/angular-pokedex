@@ -25,10 +25,7 @@ var devConfig = {
       // {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loaders: [
-          { loader: 'raw-loader' },
-          { loader: 'sass-loader' }
-        ]
+        loaders: ['raw-loader', 'sass-loader']
       }
     ]
   },

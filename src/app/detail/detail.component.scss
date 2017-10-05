@@ -1,40 +1,81 @@
-h3 {
-  text-transform: capitalize;
-}
 
-.initial-image {
-  display: flex;
-  margin: 15px 0;
+* {
+  font-family: "Helvetica";
 }
+.header {
+  text-align: center;
 
-.post-initial-image {
-  padding: 15px 30px;
-}
-
-img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: 1px solid black;
-  background-color: silver;
-  display: inline-block;
-  align-content: left;
-}
-
-label {
-  &::after {
-    content: ':';
+  #pic-background {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 300px;
+    background: rgba(204,204,204,1);
+    background: -moz-linear-gradient(top, rgba(204,204,204,1) 0%, rgba(246,246,246,1) 47%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(204,204,204,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(top, rgba(204,204,204,1) 0%, rgba(246,246,246,1) 47%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(top, rgba(204,204,204,1) 0%, rgba(246,246,246,1) 47%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(top, rgba(204,204,204,1) 0%, rgba(246,246,246,1) 47%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to bottom, rgba(204,204,204,1) 0%, rgba(246,246,246,1) 47%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#ffffff', GradientType=0 );
+    z-index: -1;
   }
 
-  color: silver;
-  text-transform: capitalize;
+  .number, .back {
+    position: absolute;
+    display: inline;
+    right: 0;
+    margin: 10px;
+    background: #FFF;
+    padding: 2px 4px;
+    border-radius: 3px;
+    span::before {
+      content: '#'
+    }
+  }
+
+  .back {
+    left: 0;
+    right: initial;
+    text-decoration: none;
+    color: #333;
+    span::before {
+      content: '\276e ';
+    }
+    &:hover {
+      color: blue;
+    }
+  }
+
+  img {
+    width: 200px;
+    height: 200px;
+    border: 3px solid #FFF;
+    box-shadow: 0 0 7px #CCC;
+    background-color: #EEE;
+  }
+
+  h3 {
+    text-transform: capitalize;
+    font-size: 2em;
+    margin: 0;
+  }
 }
 
-ul {
+ul.content {
   padding: 0;
   list-style: none;
-}
-
-.pokemon-details {
-  font-family: "Helvetica";
+  li {
+    label {
+      color: silver;
+      text-transform: capitalize;
+      width: 25%;
+      display: inline-block;
+      padding: 8px;
+      &::after {
+        content: ':';
+      }
+    }
+  }
 }

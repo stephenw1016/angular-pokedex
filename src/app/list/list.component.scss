@@ -1,16 +1,37 @@
+
+* {
+  font-family: "Helvetica";
+}
+
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
 
   li {
-    padding: 10px;
+    margin: 0 0 10px;
+    border-bottom: 1px solid #CCC;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lightyellow;
+      span {
+          color: blue;
+          text-decoration: underline;
+      }
+    }
 
     img {
-      clear: both;
-      max-width:100px;
+      width: 75px;
+      height: 75px;
+      vertical-align: middle;
+      margin: 10px;
+    }
+
+    span {
+      line-height: 1em;
+      font-size: 2em;
+      text-transform: capitalize;
     }
   }
 }
-
-
