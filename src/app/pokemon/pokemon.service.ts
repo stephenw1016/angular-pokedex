@@ -16,29 +16,28 @@ export default class PokemonService {
 
   constructor(private http: Http, private storageService: StorageService) {}
 
-  getCachedList(page: number){
-    return this.storageService.get(this.listPrefix + page);
+  getCachedList(){
+    return this.storageService.get(this.listPrefix);
   }
 
   getCachedPokemon(id: number){
     return this.storageService.get(this.pokemonPrefix + id);
   }
 
-  getPokemonList(page = 1) {
-    let cache = this.getCachedList(page);
-    let url = `${this.baseUrl}pokemon`;
+  getAllPokemon() {
+    let cache = this.getCachedList();
+    let url = `${this.baseUrl}pokemon/?limit=10000`;
 
     let formatList = (res: any) => {
-      let data = res.json().results.map((item: any) => {
-        let ids = item.url.match(/.*\/(\d+)\//);
-        item.id = ids[1];
-        return item;
-      });
+      let data = res.json().results
+        .map((item: any) => {
+          let ids = item.url.match(/.*\/(\d+)\//);
+          item.id = ids[1];
+          return item;
+        });
 
-      console.info('getPokemonList():', data);
-      this.storageService.set(this.listPrefix + page, data);
-
-      return data;
+      console.info('getAllPokemon():', data);
+      this.storageService.set(this.listPrefix, data);
     };
 
     return cache ? Observable.of(cache) : this.http.get(url)
@@ -55,7 +54,7 @@ export default class PokemonService {
 
       this.storageService.set(this.pokemonPrefix + id, data);
       console.info(`getPokemon(${id}):`, JSON.stringify(data, null, '  '));
-      
+
       return data;
     };
 
