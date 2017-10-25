@@ -38,6 +38,7 @@ export default class PokemonService {
 
       console.info('getAllPokemon():', data);
       this.storageService.set(this.listPrefix, data);
+      return data;
     };
 
     return cache ? Observable.of(cache) : this.http.get(url)

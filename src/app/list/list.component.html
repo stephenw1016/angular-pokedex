@@ -1,6 +1,8 @@
 <div>
   <button (click)="previousPage()" [disabled]="isFirstPage">Previous</button>
   <button (click)="nextPage()" [disabled]="isLastPage">Next</button>
+
+  <poke-search (onGo)="refreshList($event)"></poke-search>
 </div>
 <ul>
 	<li *ngFor="let pokemon of pokeList" [routerLink]="['details/' + pokemon.id]">
