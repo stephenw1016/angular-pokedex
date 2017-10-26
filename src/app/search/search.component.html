@@ -1,3 +1,5 @@
-<label>Search:</label>
-<input type="search" placeholder="Search for Pokemon..." [(ngModel)]="criteria" />
-<button (click)="search()">Go!</button>
+<div class="poke-search">
+  <label>Search:</label>
+  <input type="search" [placeholder]="placeholder" [(ngModel)]="criteria" />
+  <button (click)="search()">Go!</button>
+</div>

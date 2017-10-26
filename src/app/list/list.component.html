@@ -1,12 +1,17 @@
-<div>
+<div class="list-controls">
   <button (click)="previousPage()" [disabled]="isFirstPage">Previous</button>
   <button (click)="nextPage()" [disabled]="isLastPage">Next</button>
-
-  <poke-search (onGo)="refreshList($event)"></poke-search>
+  <poke-search (onGo)="refreshList($event)" placeholder="Search for Pokemon..."></poke-search>
 </div>
-<ul>
-	<li *ngFor="let pokemon of pokeList" [routerLink]="['details/' + pokemon.id]">
-		<img [src]="pokemon.pic" />
-		<span [innerHtml]="pokemon.name"></span>
-	</li>
+
+<ul class="cards">
+  <li *ngFor="let pokemon of pokeList">
+    <div class="card-top">
+      <img [src]="pokemon.pic" />
+    </div>
+    <div class="card-bottom">
+      <span [innerHtml]="pokemon.name"></span>
+      <a [routerLink]="['details/' + pokemon.id]">Details</a>
+    </div>
+  </li>
 </ul>

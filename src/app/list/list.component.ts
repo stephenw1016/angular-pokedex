@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import PokemonService from '../pokemon/pokemon.service';
-import PokemonPipe from "../search/search.pipe";
+import PokemonPipe from '../search/search.pipe';
 
 @Component({
   selector: 'poke-list',
@@ -12,16 +12,17 @@ import PokemonPipe from "../search/search.pipe";
 })
 export default class ListComponent implements OnInit, OnDestroy {
   public currentPage = 0;
-
   public isFirstPage = true;
-  public isLastPage = false;
-
+  public isLastPage = true;
   public pokeList: any[];
+
   private pokeSubscription: Subscription;
   private criteria = "";
 
-  constructor(private pokemonService: PokemonService,
-              private pokemonPipe: PokemonPipe) {}
+  constructor(
+    private pokemonService: PokemonService,
+    private pokemonPipe: PokemonPipe
+  ) {}
 
   ngOnInit() {
     this.goToPage(0);
@@ -38,7 +39,7 @@ export default class ListComponent implements OnInit, OnDestroy {
     this.isFirstPage = !pageNumber;
     return this.pokemonService.getAllPokemon().map(data => {
       data = this.pokemonPipe.transform(this.criteria, data);
-      this.isLastPage = !!(data.length / lastIndex);
+      this.isLastPage = pageNumber === Math.ceil(data.length / pageSize) - 1;
 
       return data.slice(firstIndex, lastIndex);
     });
