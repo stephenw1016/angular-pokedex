@@ -24,6 +24,19 @@ $darkBorderColor: #333;
     margin-right: 5px;
     padding: 5px 10px;
   }
+
+  .search-controls {
+    margin-left: auto;
+
+    span {
+      color: rgba(255, 255, 255, 0.5);
+      &:after {
+        content: " results";
+      }
+    }
+  }
+
+
 }
 
 ul {

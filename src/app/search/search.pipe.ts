@@ -4,8 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'pokemonPipe'
 })
 export default class PokemonPipe implements PipeTransform {
-  transform(criteria: any, data: any[]) {
+  transform(criteria: any, pokemon: any[]) {
     console.log("trivially piping data.");
-    return data;
+    return pokemon.filter(p => p.name.indexOf(criteria) !== -1);
   }
 }

@@ -1,7 +1,10 @@
 <div class="list-controls">
   <button (click)="previousPage()" [disabled]="isFirstPage">Previous</button>
   <button (click)="nextPage()" [disabled]="isLastPage">Next</button>
-  <poke-search (onGo)="refreshList($event)" placeholder="Search for Pokemon..."></poke-search>
+  <div class="search-controls">
+    <poke-search (onGo)="refreshList($event)" placeholder="Search for Pokemon..."></poke-search>
+    <span [innerHtml]="filteredSize"></span>
+  </div>
 </div>
 
 <ul class="cards">

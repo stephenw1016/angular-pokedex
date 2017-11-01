@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+//import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import PokemonService from '../pokemon/pokemon.service';
 import PokemonPipe from '../search/search.pipe';
@@ -8,13 +9,19 @@ import PokemonPipe from '../search/search.pipe';
   selector: 'poke-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
-  providers: [PokemonPipe]
+  providers: [PokemonPipe]//,
+  // animations: [
+  //   trigger('card-state', [
+  //     state()
+  //   ])
+  // ]
 })
 export default class ListComponent implements OnInit, OnDestroy {
   public currentPage = 0;
   public isFirstPage = true;
   public isLastPage = true;
   public pokeList: any[];
+  public filteredSize: number;
 
   private pokeSubscription: Subscription;
   private criteria = "";
@@ -39,6 +46,7 @@ export default class ListComponent implements OnInit, OnDestroy {
     this.isFirstPage = !pageNumber;
     return this.pokemonService.getAllPokemon().map(data => {
       data = this.pokemonPipe.transform(this.criteria, data);
+      this.filteredSize = data.length;
       this.isLastPage = pageNumber === Math.ceil(data.length / pageSize) - 1;
 
       return data.slice(firstIndex, lastIndex);
