@@ -5,10 +5,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import ListComponent from './list.component';
 import SearchModule from "../search/search.module";
+import PokemonModule from '../pokemon/pokemon.module';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
+    PokemonModule,
     CommonModule,
     RouterModule,
     SearchModule

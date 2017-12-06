@@ -1,0 +1,9 @@
+<div class="pokemon-card">
+  <div class="card-top">
+    <img [src]="pokemon.pic" />
+  </div>
+  <div class="card-bottom">
+    <span [innerHtml]="pokemon.name"></span>
+    <a [routerLink]="['details/' + pokemon.id]">Details</a>
+  </div>
+</div>

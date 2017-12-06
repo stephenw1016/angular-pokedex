@@ -9,12 +9,6 @@
 
 <ul class="cards">
   <li *ngFor="let pokemon of pokeList">
-    <div class="card-top">
-      <img [src]="pokemon.pic" />
-    </div>
-    <div class="card-bottom">
-      <span [innerHtml]="pokemon.name"></span>
-      <a [routerLink]="['details/' + pokemon.id]">Details</a>
-    </div>
+    <poke-card [pokemon]="pokemon"></poke-card>
   </li>
 </ul>
