@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var helpers = require('./helpers.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -38,10 +38,13 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: helpers.root('src', 'app'),
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?sourceMap'
-        })
+        use: {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            fallback: 'style-loader',
+            use: 'css-loader?sourceMap'
+          }
+        }
       },
       {
         test: /\.css$/,
@@ -52,7 +55,7 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
+    new webpack.optimize.SplitChunksPlugin({
       name: ['app', 'vendor', 'polyfills']
     }),
 

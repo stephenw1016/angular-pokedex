@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 //import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import PokemonService from '../pokemon/pokemon.service';
@@ -23,7 +24,7 @@ export default class ListComponent implements OnInit, OnDestroy {
   public pokeList: any[];
   public filteredSize: number;
 
-  private pokeSubscription: Subscription;
+  private pokemonSubscription: Subscription;
   private criteria = "";
 
   constructor(
@@ -36,7 +37,7 @@ export default class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.pokeSubscription.unsubscribe();
+    this.pokemonSubscription.unsubscribe();
   }
 
   getPokemonSublist(pageNumber = 0, pageSize = 20) {
@@ -44,17 +45,20 @@ export default class ListComponent implements OnInit, OnDestroy {
     let lastIndex = firstIndex + pageSize;
 
     this.isFirstPage = !pageNumber;
-    return this.pokemonService.getAllPokemon().map(data => {
+
+    const dostuff = map((data: any) => {
       data = this.pokemonPipe.transform(this.criteria, data);
       this.filteredSize = data.length;
       this.isLastPage = pageNumber === Math.ceil(data.length / pageSize) - 1;
 
       return data.slice(firstIndex, lastIndex);
     });
+
+    return this.pokemonService.getAllPokemon().pipe(dostuff);
   }
 
   goToPage(pageNumber: number) {
-    this.pokeSubscription = this.getPokemonSublist(pageNumber).subscribe((data: any) => {
+    this.pokemonSubscription = this.getPokemonSublist(pageNumber).subscribe((data: any) => {
       this.currentPage = pageNumber;
       this.pokeList = data.map((item: any) => {
         item.pic = `http://res.cloudinary.com/dwnebujkh/image/upload/v1473910425/pokemon/${item.id}.png`;

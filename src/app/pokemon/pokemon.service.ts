@@ -1,20 +1,20 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/publishReplay';
-import StorageService from '../storage/storage.service';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import StorageService from '../storage/storage.service';
 
 @Injectable()
 export default class PokemonService {
-
-  private baseUrl = 'https://pokeapi.co/api/v2/';
+  private baseUrl = 'http://localhost:3000/pokemon/';
   private listPrefix = 'pokelist-';
   private pokemonPrefix = 'pokemon-';
 
-  constructor(private http: Http, private storageService: StorageService) {}
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) {}
 
   getCachedList(){
     return this.storageService.get(this.listPrefix);
@@ -25,11 +25,11 @@ export default class PokemonService {
   }
 
   getAllPokemon() {
-    let cache = this.getCachedList();
-    let url = `${this.baseUrl}pokemon/?limit=10000`;
+    const cache = this.getCachedList();
+    const url = `${this.baseUrl}pokemon/?limit=10000`;
 
-    let formatList = (res: any) => {
-      let data = res.json().results
+    const formatPokemonList = map((res: any) => {
+      const data = res.json().results
         .map((item: any) => {
           let ids = item.url.match(/.*\/(\d+)\//);
           item.id = ids[1];
@@ -39,17 +39,18 @@ export default class PokemonService {
       console.info('getAllPokemon():', data);
       this.storageService.set(this.listPrefix, data);
       return data;
-    };
+    });
 
-    return cache ? Observable.of(cache) : this.http.get(url)
-      .map(formatList);
+    return cache
+      ? of(cache)
+      : this.http.get(url).pipe(formatPokemonList);
   }
 
   getPokemon(id: number) {
-    let cache = this.getCachedPokemon(id);
-    let url = `${this.baseUrl}pokemon/${id}`;
+    const cache = this.getCachedPokemon(id);
+    const url = `${this.baseUrl}pokemon/${id}`;
 
-    let formatPokemon = (res: any) => {
+    const formatPokemon = map((res: any) => {
       let data = res.json();
       data.pic = `http://res.cloudinary.com/dwnebujkh/image/upload/v1473910425/pokemon/${id}.png`;
 
@@ -57,9 +58,10 @@ export default class PokemonService {
       console.info(`getPokemon(${id}):`, JSON.stringify(data, null, '  '));
 
       return data;
-    };
+    });
 
-    return cache ? Observable.of(cache) : this.http.get(url)
-      .map(formatPokemon);
+    return cache
+      ? of(cache)
+      : this.http.get(url).pipe(formatPokemon);
   }
 }

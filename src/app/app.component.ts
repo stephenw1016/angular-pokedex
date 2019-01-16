@@ -6,10 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export default class AppComponent {
-
-  public title: string;
-
-  constructor() {
-    this.title = 'Static html';
-  }
+  constructor() {}
 }

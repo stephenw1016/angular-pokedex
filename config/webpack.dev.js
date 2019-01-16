@@ -1,5 +1,5 @@
 var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var commonConfig = require('./webpack.common.js');
 var helpers = require('./helpers');
 
@@ -26,6 +26,10 @@ var devConfig = {
         test: /\.scss$/,
         exclude: /node_modules/,
         loaders: ['raw-loader', 'sass-loader']
+      },
+      {
+        test: /\.css$/,
+        use: ['css-loader']
       }
     ]
   },
@@ -38,7 +42,10 @@ var devConfig = {
   },
 
   plugins: [
-    new ExtractTextPlugin('[name].css')
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    })
   ],
 
   devServer: {
