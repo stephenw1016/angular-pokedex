@@ -17,10 +17,10 @@ import PokemonPipe from '../search/search.pipe';
       state('entering', style({ opacity: 0.1 })),
       state('entered', style({ opacity: 1 })),
       transition('entering => entered', [
-        animate('250ms')
+        animate('250ms'),
       ]),
-    ])
-  ]
+    ]),
+  ],
 })
 export default class ListComponent implements OnInit, OnDestroy {
   public currentPage = 0;
@@ -59,12 +59,12 @@ export default class ListComponent implements OnInit, OnDestroy {
     const firstIndex = pageNumber * pageSize;
     const lastIndex = firstIndex + pageSize;
 
-    const filterBySearchCriteria = map((data: Array<Pokemon>) => {
-      data = this.pokemonPipe.transform(this.criteria, data);
-      this.filteredSize = data.length;
-      this.isLastPage = pageNumber === Math.ceil(data.length / pageSize) - 1;
+    const filterBySearchCriteria = map((pokemonList: Array<Pokemon>) => {
+      const filteredPokemon = this.pokemonPipe.transform(this.criteria, pokemonList);
+      this.filteredSize = filteredPokemon.length;
+      this.isLastPage = pageNumber === Math.ceil(filteredPokemon.length / pageSize) - 1;
 
-      return data.slice(firstIndex, lastIndex);
+      return filteredPokemon.slice(firstIndex, lastIndex);
     });
 
     return this.pokemonService.getAllPokemon().pipe(filterBySearchCriteria);

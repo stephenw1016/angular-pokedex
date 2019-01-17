@@ -1,5 +1,10 @@
 <div class="poke-search">
   <label>Search:</label>
-  <input type="search" [placeholder]="placeholder" [(ngModel)]="criteria" />
+  <input
+    type="search"
+    [placeholder]="placeholder"
+    [(ngModel)]="criteria"
+    (keydown.enter)="search()"
+  />
   <button (click)="search()">Go!</button>
 </div>

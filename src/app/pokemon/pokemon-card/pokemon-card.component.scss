@@ -29,7 +29,7 @@ $darkBorderColor: #333;
   width: 200px;
 
   &.selected {
-    background: #ff2727;
+    background: #d03629;
   }
 
   img {
@@ -60,6 +60,11 @@ $darkBorderColor: #333;
     font-size: .9em;
     padding: 4px 12px;
     text-decoration: none;
+    transition: border-color 200ms;
+
+    &:hover {
+      border-color: #888;
+    }
   }
 
   .card-top {

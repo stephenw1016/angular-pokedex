@@ -1,9 +1,15 @@
 <div class="pokemon-card">
   <div class="card-top">
-    <img [src]="pokemon.pic" />
+    <img [src]="pokemon.pic" [@imageState]="isActive ? 'active' : 'inactive'"/>
   </div>
   <div class="card-bottom">
     <span [innerHtml]="pokemon.name"></span>
-    <a [routerLink]="['details/' + pokemon.id]">Details</a>
+    <a
+      [routerLink]="['details/' + pokemon.id]"
+      (mouseenter)="onMouseover(true)"
+      (mouseleave)="onMouseover(false)"
+    >
+      Details
+    </a>
   </div>
 </div>
