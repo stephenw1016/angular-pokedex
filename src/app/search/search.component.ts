@@ -9,10 +9,10 @@ export default class SearchComponent {
   @Input() public placeholder: string;
   @Output() public onGo = new EventEmitter<string>();
 
-  public criteria = "";
+  public criteria = '';
 
   search() {
-    console.log("emitting...", this.criteria);
+    console.log('emitting...', this.criteria);
     this.onGo.emit(this.criteria);
   }
 }

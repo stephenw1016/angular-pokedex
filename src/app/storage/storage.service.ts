@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export default class StorageService {
-  private keyPrefix = 'pokemap-';
+  private pokemonPrefix = 'pokemap-';
 
   constructor() {}
 
-  get(key: string){
-    let result = localStorage.getItem(this.keyPrefix + key);
+  /**
+   * Retrieve a value from localStorage.
+   * @param key - the key of the item to be retrieved
+   */
+  get(key: string): any {
+    const  result = localStorage.getItem(this.pokemonPrefix + key);
+
     try {
       return JSON.parse(result);
     } catch(err) {
@@ -16,7 +21,12 @@ export default class StorageService {
     }
   }
 
-  set(key: string, value: any){
-    localStorage.setItem(this.keyPrefix + key, JSON.stringify(value));
+  /**
+   * Save a value to localStorage.
+   * @param key - the unique key of the item to set
+   * @param value - the value to set
+   */
+  set(key: string, value: any): void {
+    localStorage.setItem(this.pokemonPrefix + key, JSON.stringify(value));
   }
 }

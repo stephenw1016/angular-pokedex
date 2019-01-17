@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { map } from 'rxjs/operators';
 //import { animate, state, style, transition, trigger } from '@angular/animations';
 
+import { Pokemon } from '../pokemon/types';
 import PokemonService from '../pokemon/pokemon.service';
 import PokemonPipe from '../search/search.pipe';
 
@@ -21,11 +22,11 @@ export default class ListComponent implements OnInit, OnDestroy {
   public currentPage = 0;
   public isFirstPage = true;
   public isLastPage = true;
-  public pokeList: any[];
+  public pokeList: Array<Pokemon>;
   public filteredSize: number;
 
   private pokemonSubscription: Subscription;
-  private criteria = "";
+  private criteria = '';
 
   constructor(
     private pokemonService: PokemonService,
@@ -40,13 +41,16 @@ export default class ListComponent implements OnInit, OnDestroy {
     this.pokemonSubscription.unsubscribe();
   }
 
-  getPokemonSublist(pageNumber = 0, pageSize = 20) {
-    let firstIndex = pageNumber * pageSize;
-    let lastIndex = firstIndex + pageSize;
+  /**
+   * Get a subset of all available Pokemon with paging and search criteria.
+   * @param pageNumber - the page number of the list
+   * @param pageSize - the amount of pokemon to return
+   */
+  private getPokemonSublist(pageNumber = 0, pageSize = 20): Observable<Array<Pokemon>> {
+    const firstIndex = pageNumber * pageSize;
+    const lastIndex = firstIndex + pageSize;
 
-    this.isFirstPage = !pageNumber;
-
-    const dostuff = map((data: any) => {
+    const filterBySearchCriteria = map((data: Array<Pokemon>) => {
       data = this.pokemonPipe.transform(this.criteria, data);
       this.filteredSize = data.length;
       this.isLastPage = pageNumber === Math.ceil(data.length / pageSize) - 1;
@@ -54,10 +58,15 @@ export default class ListComponent implements OnInit, OnDestroy {
       return data.slice(firstIndex, lastIndex);
     });
 
-    return this.pokemonService.getAllPokemon().pipe(dostuff);
+    return this.pokemonService.getAllPokemon().pipe(filterBySearchCriteria);
   }
 
-  goToPage(pageNumber: number) {
+  /**
+   * Jump to a certain page of all the paginated pokemon.
+   * @param pageNumber - the page number of the list
+   */
+  private goToPage(pageNumber = 0): void {
+    this.isFirstPage = pageNumber === 0;
     this.pokemonSubscription = this.getPokemonSublist(pageNumber).subscribe((data: any) => {
       this.currentPage = pageNumber;
       this.pokeList = data.map((item: any) => {
@@ -67,17 +76,30 @@ export default class ListComponent implements OnInit, OnDestroy {
     }, (err: any) => console.error(err));
   }
 
-  refreshList(criteria: string) {
+  /**
+   * Update the Pokemon list by applying the provided search criteria.
+   * @param criteria
+   */
+  refreshList(criteria: string): void {
     this.criteria = criteria;
     this.goToPage(0);
   }
 
-  previousPage() {
-    if (this.currentPage == 0) return;
+  /**
+   * Allow the user to request the previous page.
+   */
+  previousPage(): void {
+    if (this.currentPage == 0) {
+      return;
+    }
+
     this.goToPage(--this.currentPage);
   }
 
-  nextPage() {
+  /**
+   * Allow the user to request the next page.
+   */
+  nextPage(): void {
     this.goToPage(++this.currentPage);
   }
 }

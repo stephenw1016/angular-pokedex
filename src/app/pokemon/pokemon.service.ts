@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Pokemon, PokemonDetailResponse, PokemonListResponse } from './types';
 import StorageService from '../storage/storage.service';
 
 @Injectable()
 export default class PokemonService {
   private baseUrl = 'http://localhost:3000/pokemon/';
-  private listPrefix = 'pokelist-';
+  private imageUrl = 'http://res.cloudinary.com/dwnebujkh/image/upload/v1473910425/pokemon/';
+  private pokemonListPrefix = 'pokelist-';
   private pokemonPrefix = 'pokemon-';
 
   constructor(
@@ -16,52 +18,87 @@ export default class PokemonService {
     private storageService: StorageService
   ) {}
 
-  getCachedList(){
-    return this.storageService.get(this.listPrefix);
+  /**
+   * Create a Pokemon type.
+   * @param id - a pokemon's id
+   * @param name - a pokemon's name
+   */
+  private createPokemon(id: string | number, name: string): Pokemon {
+    return {
+      id: `${id}`,
+      name,
+      pic: `${this.imageUrl}${id}.png`,
+    };
   }
 
-  getCachedPokemon(id: number){
-    return this.storageService.get(this.pokemonPrefix + id);
+  /**
+   * Fetch all pokemon from the API.
+   */
+  private requestPokemon(): Observable<PokemonListResponse> {
+    const url = `${this.baseUrl}?limit=10000`;
+
+    return this.http.get<PokemonListResponse>(url);
   }
 
-  getAllPokemon() {
-    const cache = this.getCachedList();
-    const url = `${this.baseUrl}pokemon/?limit=10000`;
+  /**
+   * Fetch a specific pokemon from the API.
+   * @param id - a pokemon's id
+   */
+  private requestPokemonById(id: number): Observable<PokemonDetailResponse> {
+    const url = `${this.baseUrl}${id}`;
 
-    const formatPokemonList = map((res: any) => {
-      const data = res.json().results
-        .map((item: any) => {
-          let ids = item.url.match(/.*\/(\d+)\//);
-          item.id = ids[1];
-          return item;
-        });
+    return this.http.get<PokemonDetailResponse>(url);
+  }
 
-      console.info('getAllPokemon():', data);
-      this.storageService.set(this.listPrefix, data);
-      return data;
+  /**
+   * Get all pokemon.
+   */
+  getAllPokemon(): Observable<Array<Pokemon>> {
+    const cachedPokemonList = this.storageService.get(this.pokemonListPrefix);
+
+    if (cachedPokemonList) {
+      return of(cachedPokemonList);
+    }
+
+    const formatPokemonList = map(({ results }: PokemonListResponse) => {
+      return results.map((item: { name: string, url: string }) => {
+        const id = item.url.match(/.*\/(\d+)\//)[1];
+        return this.createPokemon(id, item.name);
+      });
     });
 
-    return cache
-      ? of(cache)
-      : this.http.get(url).pipe(formatPokemonList);
-  }
-
-  getPokemon(id: number) {
-    const cache = this.getCachedPokemon(id);
-    const url = `${this.baseUrl}pokemon/${id}`;
-
-    const formatPokemon = map((res: any) => {
-      let data = res.json();
-      data.pic = `http://res.cloudinary.com/dwnebujkh/image/upload/v1473910425/pokemon/${id}.png`;
-
-      this.storageService.set(this.pokemonPrefix + id, data);
-      console.info(`getPokemon(${id}):`, JSON.stringify(data, null, '  '));
-
-      return data;
+    const cacheResults = map(( pokemonList: Array<Pokemon>) => {
+      this.storageService.set(this.pokemonListPrefix, pokemonList);
+      return pokemonList;
     });
 
-    return cache
-      ? of(cache)
-      : this.http.get(url).pipe(formatPokemon);
+    return this.requestPokemon()
+      .pipe(formatPokemonList)
+      .pipe(cacheResults);
+  }
+
+  /**
+   * Get a specific Pokemon by id.
+   * @param id - a pokemon's id
+   */
+  getPokemon(id: number): Observable<Pokemon> {
+    const cachedPokemon = this.storageService.get(this.pokemonPrefix + id);
+
+    if (cachedPokemon) {
+      return of(cachedPokemon);
+    }
+
+    const formatPokemon = map((response: PokemonDetailResponse) => {
+      return this.createPokemon(id, response.name);
+    });
+
+    const cacheResults = map(( pokemon: Pokemon) => {
+      this.storageService.set(this.pokemonPrefix + id, pokemon);
+      return pokemon;
+    });
+
+    return this.requestPokemonById(id)
+      .pipe(formatPokemon)
+      .pipe(cacheResults);
   }
 }

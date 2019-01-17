@@ -1,8 +1,9 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from "rxjs";
+import { Subscription } from 'rxjs';
 
-import PokemonService from "../pokemon/pokemon.service";
+import { Pokemon } from '../pokemon/types';
+import PokemonService from '../pokemon/pokemon.service';
 
 @Component({
   selector: 'poke-detail',
@@ -10,8 +11,7 @@ import PokemonService from "../pokemon/pokemon.service";
   styleUrls: ['./detail.component.scss']
 })
 export default class DetailComponent implements OnInit, OnDestroy {
-
-  public pokemon: object;
+  public pokemon: Pokemon;
   private pokeSubscription: Subscription;
 
   constructor(
@@ -21,7 +21,7 @@ export default class DetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.pokeSubscription = this.route.params.subscribe((params: Params) => {
-      this.pokemonService.getPokemon(params.id).subscribe((data: any) => {
+      this.pokemonService.getPokemon(params.id).subscribe((data: Pokemon) => {
         this.pokemon = data;
       }, (err: any) => {
           console.error(err);
