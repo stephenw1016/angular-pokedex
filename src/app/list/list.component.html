@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<ul class="cards">
+<ul class="cards" [@listState]="listState">
   <li *ngFor="let pokemon of pokeList">
     <poke-card [pokemon]="pokemon"></poke-card>
   </li>

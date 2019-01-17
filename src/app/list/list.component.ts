@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import { map } from 'rxjs/operators';
-//import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Pokemon } from '../pokemon/types';
 import PokemonService from '../pokemon/pokemon.service';
@@ -11,12 +11,16 @@ import PokemonPipe from '../search/search.pipe';
   selector: 'poke-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
-  providers: [PokemonPipe]//,
-  // animations: [
-  //   trigger('card-state', [
-  //     state()
-  //   ])
-  // ]
+  providers: [PokemonPipe],
+  animations: [
+    trigger('listState', [
+      state('entering', style({ opacity: 0.1 })),
+      state('entered', style({ opacity: 1 })),
+      transition('entering => entered', [
+        animate('250ms')
+      ]),
+    ])
+  ]
 })
 export default class ListComponent implements OnInit, OnDestroy {
   public currentPage = 0;
@@ -24,6 +28,7 @@ export default class ListComponent implements OnInit, OnDestroy {
   public isLastPage = true;
   public pokeList: Array<Pokemon>;
   public filteredSize: number;
+  public listState: string = 'entering';
 
   private pokemonSubscription: Subscription;
   private criteria = '';
@@ -35,6 +40,10 @@ export default class ListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.goToPage(0);
+
+    setTimeout(() => {
+      this.listState = 'entered';
+    }, 250);
   }
 
   ngOnDestroy() {
